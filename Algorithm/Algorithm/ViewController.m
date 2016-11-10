@@ -19,6 +19,7 @@
     NSArray *elements = [self createElement];
     NSInteger count = [self getMaxElementCountWithResult:@20 elements:elements];
     NSLog(@"final count = %ld",(long)count);
+    
     for (NSInteger index = 0; index < elements.count; index++) {
         NSNumber *num0 = elements[index];
         if (num0.integerValue == 20) {
