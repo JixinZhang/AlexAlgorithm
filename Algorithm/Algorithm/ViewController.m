@@ -10,6 +10,11 @@
 
 @interface ViewController ()
 
+@property (nonatomic, assign) NSInteger count0;
+@property (nonatomic, assign) NSInteger count1;
+@property (nonatomic, assign) NSInteger countLog0;
+@property (nonatomic, assign) NSInteger countLog1;
+
 @end
 
 @implementation ViewController
@@ -19,45 +24,62 @@
     NSArray *elements = [self createElement];
     NSInteger count = [self getMaxElementCountWithResult:@20 elements:elements];
     NSLog(@"final count = %ld",(long)count);
+    _count0 = _count1 = 0;
+    _countLog0 = _countLog1 = 0;
     
+    NSLog(@"methos one \n");
     for (NSInteger index = 0; index < elements.count; index++) {
         NSNumber *num0 = elements[index];
         if (num0.integerValue == 20) {
             NSLog(@"%@=20",num0);
+            _countLog0++;
         }
         for (NSInteger i1 = index + 1; i1 < elements.count; i1++) {
             NSNumber *num1 = elements[i1];
             if (num0.doubleValue + num1.doubleValue == 20) {
                 NSLog(@"%@+%@=20",num0,num1);
+                _countLog0++;
             }
             for (NSInteger i2 = i1 + 1; i2 < elements.count; i2++) {
                 NSNumber  *num2 = elements[i2];
                 if ((num0.integerValue + num1.integerValue + num2.integerValue) == 20) {
                     NSLog(@"%@+%@+%@=20",num0,num1,num2);
+                    _countLog0++;
                 }
                 for (NSInteger i3 = i2 + 1; i3 < elements.count; i3++) {
                     NSNumber  *num3 = elements[i3];
                     if ((num0.integerValue + num1.integerValue + num2.integerValue + num3.integerValue) == 20) {
                         NSLog(@"%@+%@+%@+%@=20",num0,num1,num2,num3);
+                        _countLog0++;
                     }
                     for (NSInteger i4 = i3 + 1; i4 < elements.count; i4++) {
                         NSNumber  *num4 = elements[i4];
                         if ((num0.integerValue + num1.integerValue + num2.integerValue + num3.integerValue + num4.integerValue  ) == 20) {
                             NSLog(@"%@+%@+%@+%@+%@=20",num0,num1,num2,num3,num4);
+                            _countLog0++;
                         }
+                        _count0++;
                     }
+                    _count0++;
                 }
+                _count0++;
             }
+            _count0++;
         }
-//        NSNumber *num0 = elements[index];
-//        double sum = num0.doubleValue;
-//        [self recursionFunctionWithelements:elements
-//                                      count:count
-//                                  baseIndex:index
-//                               currentIndex:1
-//                                 previouSum:sum];
-        
+        _count0++;
     }
+    
+    NSLog(@"methos two \n");
+    [self recursionFunctionWithelements:elements
+                           previouString:@""
+                                  count:count
+                              baseIndex:-1
+                           currentIndex:1
+                             previouSum:0];
+    NSLog(@"\n count0 = %ld \n count1 = %ld",_count0,_count1);
+    NSLog(@"\n countLog0 = %ld \n countLog1 = %ld",_countLog0,_countLog1);
+
+
     
 }
 
@@ -91,36 +113,35 @@
 }
 
 - (void)recursionFunctionWithelements:(NSArray *)elements
+                        previouString:(NSString *)previouString
                                 count:(NSInteger)count
                             baseIndex:(NSInteger)baseIndex
                          currentIndex:(NSInteger)currentIndex
                            previouSum:(double)previouSum {
-    for (NSInteger index = baseIndex + currentIndex; index < elements.count; index++) {
+
+    for (NSInteger index = baseIndex + 1; index < elements.count; index++) {
         NSNumber *num = elements[index];
-        if ((previouSum + num.doubleValue) == 20) {
-            NSString *printString = @"";
-            for (NSInteger j = 0; j < currentIndex; j++) {
-                NSNumber *previouNum = elements[j];
-                printString = [NSString stringWithFormat:@"%@%ld+",printString ,(long)previouNum.integerValue];
+        double sum = previouSum + num.doubleValue;
+        if (sum == 20) {
+            NSString *pringString = [NSString stringWithFormat:@"%@+%@=20",previouString,num];
+            NSLog(@"%@",pringString);
+            _countLog1++;
+        }if (count > 0) {
+            NSString *string = @"";
+            if (previouString.length) {
+                string = [NSString stringWithFormat:@"%@+%@",previouString,num];
+            } else {
+                string = [NSString stringWithFormat:@"%@",num];
             }
-            NSLog(@"%@%.f=20",printString,num.doubleValue);
-        } else {
-            continue;
-        }
-        
-        if (currentIndex == count - 1) {
-            return;
-        } else {
-            double sum = previouSum + num.doubleValue;
             [self recursionFunctionWithelements:elements
+                                  previouString:string
                                           count:count
-                                      baseIndex:baseIndex
-                                   currentIndex:currentIndex + 1
+                                      baseIndex:index
+                                   currentIndex:1
                                      previouSum:sum];
         }
+        _count1++;
     }
 }
-
-
 
 @end
