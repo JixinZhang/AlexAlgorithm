@@ -27,7 +27,7 @@
     _count0 = _count1 = 0;
     _countLog0 = _countLog1 = 0;
     
-    NSLog(@"methos one \n");
+    NSLog(@"\n method one ");
     for (NSInteger index = 0; index < elements.count; index++) {
         NSNumber *num0 = elements[index];
         if (num0.integerValue == 20) {
@@ -69,15 +69,14 @@
         _count0++;
     }
     
-    NSLog(@"methos two \n");
+    NSLog(@"\n method two");
     [self recursionFunctionWithelements:elements
                            previouString:@""
                                   count:count
                               baseIndex:-1
-                           currentIndex:1
                              previouSum:0];
-    NSLog(@"\n count0 = %ld \n count1 = %ld",_count0,_count1);
-    NSLog(@"\n countLog0 = %ld \n countLog1 = %ld",_countLog0,_countLog1);
+    NSLog(@"\n 方法一循环次数 = %ld \n 方法二循环次数 = %ld",_count0,_count1);
+    NSLog(@"\n 方法一得到的组合个数：%ld \n 方法二得到的组合个数：%ld",_countLog0,_countLog1);
 
 
     
@@ -116,9 +115,10 @@
                         previouString:(NSString *)previouString
                                 count:(NSInteger)count
                             baseIndex:(NSInteger)baseIndex
-                         currentIndex:(NSInteger)currentIndex
                            previouSum:(double)previouSum {
-
+    if (count == 0) {
+        return;
+    }
     for (NSInteger index = baseIndex + 1; index < elements.count; index++) {
         NSNumber *num = elements[index];
         double sum = previouSum + num.doubleValue;
@@ -126,20 +126,18 @@
             NSString *pringString = [NSString stringWithFormat:@"%@+%@=20",previouString,num];
             NSLog(@"%@",pringString);
             _countLog1++;
-        }if (count > 0) {
-            NSString *string = @"";
-            if (previouString.length) {
-                string = [NSString stringWithFormat:@"%@+%@",previouString,num];
-            } else {
-                string = [NSString stringWithFormat:@"%@",num];
-            }
-            [self recursionFunctionWithelements:elements
-                                  previouString:string
-                                          count:count
-                                      baseIndex:index
-                                   currentIndex:1
-                                     previouSum:sum];
         }
+        NSString *string = @"";
+        if (previouString.length) {
+            string = [NSString stringWithFormat:@"%@+%@",previouString,num];
+        } else {
+            string = [NSString stringWithFormat:@"%@",num];
+        }
+        [self recursionFunctionWithelements:elements
+                              previouString:string
+                                      count:count - 1
+                                  baseIndex:index
+                                 previouSum:sum];
         _count1++;
     }
 }
