@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>算法</title>
+</head>
+<body>
+
+<div>
+	<h1>一、题目</h1>
+	<p>从1-20共20个数中选出任意个数，找出这些数相加等于20的组合.</p>
+</div>
+
+<div>
+	<input type="button" name="answer" onclick="alexAlgorithm()" value="解答">
+	<hr/>
+	<p id="result"></p>
+</div>
+
+<script type="text/javascript">
+	function alexAlgorithm() {
+		var array = new Array(21);
+		for (var i = 1; i < array.length; i++) {
+			array[i] = i;
+			// document.write("输出数组:array[\" + i + \"] = " + array[i]);
+			// document.write("<br/>");
+		}
+
+		for (var index = 0; index < array.length; index++) {
+			var num0 = array[index];
+			if (num0 == 20) {
+				document.write("result: " + num0 + " = 20");
+				document.write("<br/>");
+			}
+			for (var i1 = index + 1; i1 < array.length; i1++) {
+				var num1 = array[i1];
+				if (num0 + num1 == 20) {
+					document.write("result: " + num0 + "+" + num1 + " = 20");
+					document.write("<br/>");
+				}
+				for (var i2 = i1 + 1; i2 < array.length; i2++) {
+					var num2 = array[i2];
+					if (num0 + num1 + num2 == 20) {
+						document.write("result: " + num0 + "+" + num1 + "+"  + "+" + num2 + " = 20");
+						document.write("<br/>");
+					}
+					for (var i3 = i2 + 1; i < array.length; i3++) {
+						var num3 = Things[i3];
+						if (num0 + num1 + num2 + num3== 20) {
+							document.write("result: " + num0 + "+" + "+" + num1 + "+" + num2 + "+" + num3 + " = 20");
+							document.write("<br/>");
+						}
+						for (var i4= i3 + 1; i4 < array.length; i4++) {
+							var num4 = array[i4];
+							if (num0 + num1 + num2 + num3 + num4 == 20) {
+								document.write("result: " + num0 + "+" + "+" + num1 + "+" + num2 + "+" + num3 + "+" + num4 + " = 20");
+								document.write("<br/>");
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+</script>
+
+</body>
+</html>
